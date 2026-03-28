@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Te Amo</title>
+
+<style>
+    body {
+        display: flex;
+        margin: 0;
+        background: #0a0a0a;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        user-select: none;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* TE AMO central */
+    .centro {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ff2d75;
+        font-size: 5vw;
+        font-weight: bold;
+        text-shadow: 0 0 25px #ff2d75;
+        z-index: 1000;
+    }
+
+    /* Lluvia */
+    .lluviaItem {
+        position: absolute;
+        top: -50px;
+        color: #ff2d75;
+        font-size: 1.2rem;
+        animation: caer 5s linear infinite;
+        opacity: 0.8;
+        text-shadow: 0 0 14px #ff2d75;
+    }
+
+    @keyframes caer {
+        0% { transform: translateY(0) rotate(0deg); }
+        100% { transform: translateY(120vh) rotate(360deg); }
+    }
+
+    /* Explosión */
+    .explosionItem {
+        position: absolute;
+        color: #ff2d75;
+        font-weight: bold;
+        text-shadow: 0 0 14px #ff2d75;
+        animation: boom 4s ease-out forwards;
+        pointer-events: none;
+    }
+
+    @keyframes boom {
+    0% {
+        transform: scale(0.2);
+        opacity: 1;
+    }
+    30% {
+        transform: scale(1.3);
+        opacity: 0.8;
+    }
+    60% { 
+        transform: scale(1.7);
+        opacity: 0.4;
+    }
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+</style>
+
+<body>
+
+<!-- TEXTO CENTRAL -->
+        <div class="centro">❤️TE AMO MI KIKI💖</div>
+
+<!-- AUDIO -->
+<audio id="musica" loop>
+    <source src="tuCancion.mp3.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    // Generar lluvia
+    function crearLluvia() {
+        const elementos = ["❤️", "TE AMO", "💖", "💘"];
+        const item = document.createElement("div");
+        item.classList.add("lluviaItem");
+        item.innerText = elementos[Math.floor(Math.random() * elementos.length)];
+        item.style.left = Math.random() * 100 + "vw";
+        item.style.fontSize = (1 + Math.random() * 1.9) + "rem";
+        item.style.animationDuration = (3 + Math.random() * 4) + "s";
+        document.body.appendChild(item);
+
+        setTimeout(() => item.remove(), 15000);
+    }
+
+    setInterval(crearLluvia, 200);
+
+    // Explosión + música
+   const musica = document.getElementById("musica");
+   let inicio = false;
+
+    document.body.addEventListener("click", (e) => {
+    // Explosión
+    for (let i = 0; i < 20; i++) {
+        const t = document.createElement("div");
+        t.classList.add("explosionItem");
+        t.innerText = "TE AMO";
+        t.style.left = (e.clientX + (Math.random() * 80 - 40)) + "px";
+        t.style.top = (e.clientY + (Math.random() * 80 - 40)) + "px";
+        t.style.fontSize = (1 + Math.random() * 1.5) + "rem";
+        document.body.appendChild(t);
+
+        setTimeout(() => t.remove(), 1000);
+    }
+
+});
+</script><script>
+document.addEventListener("DOMContentLoaded", () => {
+    const musica = document.getElementById("musica");
+    let inicio = false;
+
+    // Detecta TOQUE, NO clic (Android ama pointerdown)
+    window.addEventListener("click", () => {
+        if (!inicio) {
+            musica.play().catch(() => {});
+            inicio = true;
+        }
+    });
+});
+</script>
